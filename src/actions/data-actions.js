@@ -1,3 +1,5 @@
+import { data } from '../data';
+
 export function SaveStockData(){
   return dispatch => {
     dispatch({

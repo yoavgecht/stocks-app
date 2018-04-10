@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
-import styles from './App.css';
+import { connect } from 'react-redux';
 import axios from 'axios';
 import { Grid, Row, Col, Button } from 'react-bootstrap';
 import TableComponent from './components/table/TableComponent'; 
 import Input from './components/form/Input/Input';
+import { SaveStockData } from './actions/data-actions';
 import moment from 'moment';
 
 
@@ -207,4 +207,12 @@ class App extends Component {
   }
 }
 
-export default App;
+// Make data  array available in  props
+function mapStateToProps(state) {
+  return {
+      data : state.dataStore.data
+  }
+}
+
+export default connect(mapStateToProps, {SaveStockData})(App);
+
