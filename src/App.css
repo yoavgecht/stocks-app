@@ -1,0 +1,45 @@
+@import "react-datepicker/dist/react-datepicker.css"
+.App {
+  text-align: center;
+}
+
+.App-logo {
+  animation: App-logo-spin infinite 20s linear;
+  height: 80px;
+}
+
+.App-header {
+  background-color: #222;
+  height: 150px;
+  padding: 20px;
+  color: white;
+}
+
+.App-title {
+  font-size: 1.5em;
+}
+
+.App-intro {
+  font-size: large;
+}
+
+.sentStatus{
+  margin-top:5px;
+  font-style: italic;
+  font-size: 14px;
+}
+
+.form-control.datepicker {
+  height: 40px
+}
+
+.form-control.datepicker {
+    outline: none;
+    background: #ccc;
+}
+
+
+@keyframes App-logo-spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
