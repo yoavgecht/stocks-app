@@ -2,7 +2,7 @@ const request = require('request');
 
 var getRows = (formData, callback) => {
     request({
-        url: `https://www.quandl.com/api/v3/datasets/WIKI/FB.json?column_index=4&start_date=${formData.tickerDate}&end_date=${formData.tickerDate}&collapse=monthly&transform=rdiff&api_key=Vk29NQzysMurK6sfhDxw`,
+        url: `https://www.quandl.com/api/v3/datasets/WIKI/FB.json?column_index=4&start_date=${formData.tickerDate}&end_date=${formData.tickerDate}&collapse=monthly&transform=rdiff&api_key=process.env.QUANDL_API_KEY`,
         json: true 
     }, (error, response, body) => {
         if(error) {
