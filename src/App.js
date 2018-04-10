@@ -13,7 +13,7 @@ class App extends Component {
   state = {
     quandlForm: {
          ticker: {
-                label: 'Enter Ticker:',
+                label: 'Enter Ticker (mm/dd/yyyy):',
                 elementType: 'input',
                 elementConfig: {
                     type: 'text',
@@ -167,7 +167,7 @@ class App extends Component {
             bsSize="large" 
             type="submit"
             disabled={!this.state.isFormValid} 
-            >Save</Button>
+            >Get Ticker Data</Button>
         </form>
     )
     

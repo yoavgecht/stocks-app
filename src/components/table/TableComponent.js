@@ -2,6 +2,9 @@ import React from 'react';
 import { Table } from 'react-bootstrap';
 
 const TableComponent = (props) => (
+    <div>
+    <h3>{props.tickerData.dataset_code}</h3>
+    <h3>i.e. {props.tickerData.end_date}</h3>
     <Table responsive striped bordered condensed hover>
     <thead>
         <tr>
@@ -20,6 +23,7 @@ const TableComponent = (props) => (
         )}
     </tbody>
 </Table>
+</div>
     );
     
 
