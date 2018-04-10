@@ -160,7 +160,7 @@ class App extends Component {
             touched={input.config.touched} //we set it on inputChangedHandler
             changed={(event) => this.inputChangedHandler(event, input.id)}/> 
           ))}
-          
+
            <Button
             style={{marginTop: 20}} 
             bsStyle="success" 
@@ -168,14 +168,6 @@ class App extends Component {
             type="submit"
             disabled={!this.state.isFormValid} 
             >Save</Button>
-
-
-            <Button
-            style={{marginTop: 20}} 
-            bsStyle="success" 
-            bsSize="large" 
-            disabled={!this.state.isFormValid} 
-            onClick={this.formSubmit}>Delete</Button>
         </form>
     )
     
@@ -189,6 +181,27 @@ class App extends Component {
                  {this.state.tickerData && <TableComponent tickerData={this.state.tickerData}/> }
             </Col>
         </Row>
+        <Row>
+         {this.state.tickerData && 
+            <Col xs={12} sm={12} md={12}>
+           
+            <Button
+            style={{marginTop: 20}} 
+            bsStyle="success" 
+            bsSize="large" 
+            type="submit"
+            disabled={!this.state.isFormValid} 
+            >Save</Button>
+
+            <Button
+            style={{marginTop: 20}} 
+            bsStyle="success" 
+            bsSize="large" 
+            disabled={!this.state.isFormValid} 
+            onClick={this.formSubmit}>Delete</Button>
+            </Col>
+         }
+        </Row> 
       </Grid> 
      );
   }
