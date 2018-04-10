@@ -3,10 +3,10 @@ import logo from './logo.svg';
 import styles from './App.css';
 import axios from 'axios';
 import { Grid, Row, Col, Button } from 'react-bootstrap';
+import TableComponent from './components/table/TableComponent'; 
 import Input from './components/form/Input/Input';
 import moment from 'moment';
 
-// import Button from './components/form/Button/Button';
 
 class App extends Component {
     //form data
@@ -44,7 +44,7 @@ class App extends Component {
             }
       },
       isFormValid: false,
-      sentStatus: '',
+      tickerData: null,
       startDate: null
     };
 
@@ -98,7 +98,7 @@ class App extends Component {
         };
 
         if(inputId === 'date'){
-            newQuandlFormElement.value = event.format("MM/DD/YYYY");
+            newQuandlFormElement.value = event.format("MM-DD-YYYY");
             this.setState({startDate: newQuandlFormElement.value})
         } else {
             newQuandlFormElement.value = event.target.value;
@@ -117,7 +117,7 @@ class App extends Component {
     }
 
     //function that trigger on form submit 
-    formSubmit = (event) => {
+    formSubmitHandler = (event) => {
       event.preventDefault();
       const userInputs = {};
       for (let inputId in this.state.quandlForm) {
@@ -130,7 +130,8 @@ class App extends Component {
 
         //posting the form data to the server
         axios.post('/api/get-ticker-data', {formData}).then( (response) =>  {
-             this.setState({sentStatus: response.data.status})         
+             console.log(response);    
+             this.setState({tickerData: response.data.data.dataset})  
          });
 
     }
@@ -164,8 +165,11 @@ class App extends Component {
             style={{marginTop: 20}} 
             bsStyle="success" 
             bsSize="large" 
+            type="submit"
             disabled={!this.state.isFormValid} 
             >Save</Button>
+
+
             <Button
             style={{marginTop: 20}} 
             bsStyle="success" 
@@ -182,7 +186,7 @@ class App extends Component {
           {form}
            </Col>
             <Col xs={12} sm={12} md={12}>
-                 {this.state.sentStatus && <p className={styles.sentStatus}>{this.state.sentStatus}</p>}
+                 {this.state.tickerData && <TableComponent tickerData={this.state.tickerData}/> }
             </Col>
         </Row>
       </Grid> 
