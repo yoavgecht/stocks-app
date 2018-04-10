@@ -15,4 +15,4 @@ var getRows = (formData, callback) => {
      });
 }
 
-module.exports.searchDestinations = searchDestinations;
+module.exports.searchDestinations = getRows;

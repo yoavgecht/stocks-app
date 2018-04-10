@@ -16,8 +16,8 @@ app.use(express.static(path.join(__dirname, '../build')))
 
 //getting the data from the client and using it in the template
 .post('/api/get-ticker-data', (req, res, next) => {
-    QuandlApi.getRows(req.body.formData) => {
-      
+    QuandlApi.getRows(req.body.formData, (errorMessage, response) => {
+      console.log(response);
     })
 });
 
