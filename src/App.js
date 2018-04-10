@@ -4,7 +4,7 @@ import axios from 'axios';
 import { Grid, Row, Col, Button } from 'react-bootstrap';
 import TableComponent from './components/table/TableComponent'; 
 import Input from './components/form/Input/Input';
-import { SaveStockData } from './actions/data-actions';
+import { saveStockData } from './actions/data-actions';
 import moment from 'moment';
 
 
@@ -133,7 +133,11 @@ class App extends Component {
              console.log(response);    
              this.setState({tickerData: response.data.data.dataset})  
          });
+    }
 
+    saveStockDataHandler = () => {
+        var data = this.state.tickerData;
+        this.props.saveStockData(data);
     }
 
   render() {
@@ -189,8 +193,9 @@ class App extends Component {
             style={{marginTop: 20}} 
             bsStyle="success" 
             bsSize="large" 
-            type="submit"
-            disabled={!this.state.isFormValid} 
+            disabled={!this.state.isFormValid}
+            onClick={this.saveStockDataHandler}
+
             >Save</Button>
 
             <Button
@@ -210,9 +215,9 @@ class App extends Component {
 // Make data  array available in  props
 function mapStateToProps(state) {
   return {
-      data : state.dataStore.data
+      data : state.tickerData
   }
 }
 
-export default connect(mapStateToProps, {SaveStockData})(App);
+export default connect(mapStateToProps, {saveStockData})(App);
 

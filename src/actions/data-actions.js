@@ -1,10 +1,13 @@
 import { data } from '../data';
+import axios from 'axios';
 
-export function SaveStockData(){
-  return dispatch => {
-    dispatch({
-      type: 'SAVE_STOCKDATA',
-      payload: data
+const url = '/api/save-ticker-data';
+
+export function saveStockData(stockData) {
+  return dispatch=> {
+    return dispatch({
+      type: 'SAVE_CONTACT',
+      payload: axios.post(url, stockData)
     })
   }
 }

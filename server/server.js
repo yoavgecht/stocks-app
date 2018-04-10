@@ -2,14 +2,13 @@ var express =  require('express');
 const path = require('path');
 const moment = require('moment');
 moment().format();
-const mongoose = require('mongoose');
-const DataModel = require('./data-model');
-
+const mongodb = require('mongodb');
+const dbUrl = 'mongodb://localhost:27017/stockdata';
 const QuandlApi = require('./QuandlApi');
 var app = express();
 const port = process.env.PORT || 8080;
 var bodyParser  =  require('body-parser');
-
+var db;
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, '../build')))
@@ -31,26 +30,41 @@ app.use(express.static(path.join(__dirname, '../build')))
     })
 })
 
-// .post('/api/save-ticker-data', (req, res, next) => {
-//     DataModel.findOne({googleId: profile.id}).then((currentData) => {
-//             if(currentData){
-//                 // already have this data
-//                 console.log('data already exists: ', currentData);
-//                 done(null, currentData);
-//             } else {
-//                 // if not, create data in our db
-//                 new DataModel({
-//                     dataset_code: '',
-//                     database_code: '',
-//                     name: '',
-//                     description: ''
-//                 }).save().then((newData) => {
-//                     console.log('created new data: ', newData);
-//                     done(null, newData);
-//                 });
-//             }
-//     });
-// });
+
+    mongodb.MongoClient.connect(dbUrl, (err, database) => {
+        app.post('/api/save-ticker-data', (req, res, next) => {
+            console.log(req.body);
+            db = database;
+            if (err) throw err;
+		    console.log('Connection Established');
+
+            db.listCollections({name: 'stockdata'})
+                .next(function(err, collinfo) {
+                    if (collinfo) {
+                        // The collection exists
+                        console.log('collinfo');
+                        console.log(collinfo);
+                    } else{
+                        db.createCollection("stockdata");
+                        console.log(db.collection('stockdata'));
+
+                    }
+   		        });
+                    var collection = db.collection('stockdata');
+                    var stockData = {
+                        dataset_code: req.body.dataset_code,
+                        database_code: req.body.database_code,
+                        name: req.body.name,
+                        description: req.body.description
+                        
+                    }
+
+                    collection.insert(stockData, function(err, data){
+                        res.json(data);
+                    });
+            });
+        })
+
 
 // .post('/api/delete-ticker-data', (req, res, next) => {
     
