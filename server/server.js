@@ -2,6 +2,9 @@ var express =  require('express');
 const path = require('path');
 const moment = require('moment');
 moment().format();
+const mongoose = require('mongoose');
+const DataModel = require('./data-model');
+
 const QuandlApi = require('./QuandlApi');
 var app = express();
 const port = process.env.PORT || 8080;
@@ -26,7 +29,34 @@ app.use(express.static(path.join(__dirname, '../build')))
      console.log('response', response);
       res.json({data: response});
     })
-});
+})
+
+// .post('/api/save-ticker-data', (req, res, next) => {
+//     DataModel.findOne({googleId: profile.id}).then((currentData) => {
+//             if(currentData){
+//                 // already have this data
+//                 console.log('data already exists: ', currentData);
+//                 done(null, currentData);
+//             } else {
+//                 // if not, create data in our db
+//                 new DataModel({
+//                     dataset_code: '',
+//                     database_code: '',
+//                     name: '',
+//                     description: ''
+//                 }).save().then((newData) => {
+//                     console.log('created new data: ', newData);
+//                     done(null, newData);
+//                 });
+//             }
+//     });
+// });
+
+// .post('/api/delete-ticker-data', (req, res, next) => {
+    
+    
+// });
+
 
 
 app.listen(port);
