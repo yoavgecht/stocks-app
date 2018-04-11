@@ -52,7 +52,7 @@ class App extends Component {
     //validation function - checking for the rules we defined on the quandl form data state object
 
     componentDidMount(){
-        this.getStockData();
+        // this.getStockData();
     }
 
     checkValidation(value, rules) {
