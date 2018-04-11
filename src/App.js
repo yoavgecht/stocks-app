@@ -132,7 +132,7 @@ class App extends Component {
         //posting the form data to the server
         axios.post('/api/get-ticker-data', {formData}).then( (response) =>  {
              console.log(response);    
-             this.setState({tickerData: response.data.data.dataset, searchHistory: [...this.state.searchHistory, response.data.data.dataset]})  
+             this.setState({tickerData: response.data.data.dataset})  
          });
     }
 

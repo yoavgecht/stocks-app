@@ -1,11 +1,12 @@
 import axios from 'axios';
 
 const saveUrl = '/api/save-ticker-data';
+const SET_STOCKDATA = "SET_STOCKDATA"
 
 export function setStockData(stockData) {
   return dispatch=> {
     return dispatch({
-      type: 'SET_STOCKDATA',
+      type: SET_STOCKDATA,
       stockData,
       })
   }
@@ -18,8 +19,9 @@ export function saveStockData(stockData) {
       type: 'SAVE_STOCKDATA',
       stockData,
       payload: axios.post(saveUrl, stockData)
-        .then( response => response.json())    
-        .then(data => dispatch(setStockData(data))) 
+        .then( (response) =>  {
+            dispatch(setStockData(response))      
+         })
       })
   }
 }

@@ -18,6 +18,13 @@ export default (state=defaultState, action={}) => {
       }
     }
 
+       case 'SET_STOCKDATA': {
+      return {
+         ...state.searchHistory,
+         data: [action.stockData]
+      }
+    }
+
 
     default:
       return state;
