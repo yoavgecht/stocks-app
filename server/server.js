@@ -67,14 +67,12 @@ app.use(express.static(path.join(__dirname, '../build')))
             });
 
         app.delete('/api/delete-ticker-data/:stock', (req, res, next) => {
-            console.log('param', req.params.stock);
+            console.log('param', req.params.stockId);
             db = client.db('stockdata');
             var collection = db.collection('stockdata');
-            collection.find({ dataset_code: req.params.stock }, function(err, data){
-							console.log('DATA FROM FINDING:', data);
-                collection.remove({_id: data._id},{justOne: true}, function(){
-			 					res.json(null);
-			 			});
+            var obj_id = new require('mongodb').ObjectID(req.params.id);
+            collection.remove({_id: obj_id},{justOne: true}, function(){
+                res.json(null);
             });
         });
 

@@ -153,8 +153,8 @@ class App extends Component {
         });
     }
 
-    deleteStockDataHandler = (stock) => {
-        this.props.deleteStockData(stock);
+    deleteStockDataHandler = (stockId) => {
+        this.props.deleteStockData(stockId);
     }
 
   render() {
