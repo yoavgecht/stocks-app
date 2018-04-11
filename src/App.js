@@ -138,7 +138,9 @@ class App extends Component {
 
     saveStockDataHandler = () => {
         var data = this.state.tickerData;
-        this.props.saveStockData(data);
+        this.props.saveStockData(data).then(res => {
+            console.log(res);
+        });
     }
 
     deleteStockDataHandler = (stock) => {

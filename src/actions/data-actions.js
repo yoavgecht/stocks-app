@@ -7,7 +7,8 @@ export function saveStockData(stockData) {
     return dispatch({
       type: 'SAVE_STOCKDATA',
       payload: axios.post(saveUrl, stockData)
-    })
+              .then(res => res.json())
+      })
   }
 }
 
