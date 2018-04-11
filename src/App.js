@@ -5,7 +5,7 @@ import { Grid, Row, Col, Button } from 'react-bootstrap';
 import TableComponent from './components/table/TableComponent';
 import SearchedListComponent from './components/searched/SearchesListComponent';  
 import Input from './components/form/Input/Input';
-import { saveStockData, deleteStockData, setStockData } from './actions/data-actions';
+import { saveStockData, deleteStockData, fetchStockData } from './actions/data-actions';
 import moment from 'moment';
 
 
@@ -50,6 +50,10 @@ class App extends Component {
     };
 
     //validation function - checking for the rules we defined on the quandl form data state object
+
+    componentDidMount(){
+        this.getStockData();
+    }
 
     checkValidation(value, rules) {
        let isValid = true;
@@ -136,11 +140,16 @@ class App extends Component {
          });
     }
 
+    getStockData = () => {
+         this.props.fetchStockData().then(res => {
+             this.setState({searchHistory: this.props.searchHistory}) 
+        });
+    }
+
     saveStockDataHandler = () => {
         var data = this.state.tickerData;
         this.props.saveStockData(data).then(res => {
              this.setState({searchHistory: this.props.searchHistory}) 
-            
         });
     }
 
@@ -193,7 +202,7 @@ class App extends Component {
             
            </Col>
            <Col xs={12} sm={12} md={4}>
-                {this.props.searchHistory && <SearchedListComponent deleteStock={this.deleteStockDataHandler} searchHistory={this.props.searchHistory} />}
+                {this.props.searchHistory.length > 0 && <SearchedListComponent deleteStock={this.deleteStockDataHandler} searchHistory={this.props.searchHistory} />}
            </Col>
            </Row>
            <Row>
@@ -234,5 +243,5 @@ function mapStateToProps(state) {
   }
 }
 
-export default connect(mapStateToProps, {saveStockData, deleteStockData, setStockData})(App);
+export default connect(mapStateToProps, {saveStockData, deleteStockData, fetchStockData})(App);
 

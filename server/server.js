@@ -71,11 +71,17 @@ app.use(express.static(path.join(__dirname, '../build')))
 			 					res.json(null);
 			 			});
             });
-            
-
-
         });
-    })
+
+        app.get('/api/get-search-history-data', (req, res, next) => {
+              db = client.db('stockdata');
+              var collection = db.collection('stockdata');
+              collection.find({ dataset_code: req.params.stock }, function(err, data){
+                console.log('DATA FROM FINDING:', data);
+                    res.json(data);
+                });
+            });
+        });
 
 
 

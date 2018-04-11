@@ -1,13 +1,29 @@
 import axios from 'axios';
 
 const saveUrl = '/api/save-ticker-data';
-const SET_STOCKDATA = "SET_STOCKDATA"
+const getUrl = 'api/get-search-history-data'
+
+
+
+
 
 export function setStockData(stockData) {
   return dispatch => {
     return dispatch({
-      type: SET_STOCKDATA,
+      type: 'SET_STOCKDATA',
       stockData,
+      })
+  }
+}
+
+export function fetchStockData(stockData) {
+  return dispatch => {
+    return dispatch({
+      type: 'FETCH_STOCKDATA',
+      payload: axios.get(getUrl)
+        .then( (response) =>  {
+            dispatch(setStockData(response))      
+         })
       })
   }
 }
