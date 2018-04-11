@@ -139,7 +139,8 @@ class App extends Component {
     saveStockDataHandler = () => {
         var data = this.state.tickerData;
         this.props.saveStockData(data).then(res => {
-            console.log(this.state.searchHistory);
+             this.setState({searchHistory: this.state.searchHistory}) 
+            
         });
     }
 
@@ -192,7 +193,7 @@ class App extends Component {
             
            </Col>
            <Col xs={12} sm={12} md={4}>
-                {this.state.searchHistory && <SearchedListComponent deleteStock={this.deleteStockDataHandler} searchHistory={this.state.searchHistory} />}
+                 <SearchedListComponent deleteStock={this.deleteStockDataHandler} searchHistory={this.props.searchHistory} />
            </Col>
            </Row>
            <Row>
