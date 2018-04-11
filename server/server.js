@@ -57,7 +57,12 @@ app.use(express.static(path.join(__dirname, '../build')))
                     }
 
                     collection.insert(stockData, function(err, data){
-                        res.json(data);
+                          collection.find({}).toArray(function(err, data){
+                            if(err) throw err;
+                            console.log('data');
+                            console.log(data);
+                            res.json(data);
+                        });
                     });
             });
 
@@ -73,13 +78,16 @@ app.use(express.static(path.join(__dirname, '../build')))
             });
         });
 
-        app.get('/api/get-search-history-data', (req, res, next) => {
+        app.post('/api/get-history-data', (req, res, next) => {
+              console.log('/api/get-search-history-data');
               db = client.db('stockdata');
               var collection = db.collection('stockdata');
-              collection.find({}, function(err, data){
-                console.log('DATA FROM FINDING:', data);
-                    res.json(data);
-                });
+              collection.find({}).toArray(function(err, data){
+                if(err) throw err;
+                console.log('data');
+                console.log(data);
+                res.json(data);
+            });
             });
         });
 

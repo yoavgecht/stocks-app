@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const saveUrl = '/api/save-ticker-data';
-const getUrl = 'api/get-search-history-data'
+const getUrl = '/api/get-history-data';
 
 
 
@@ -16,11 +16,11 @@ export function setStockData(stockData) {
   }
 }
 
-export function fetchStockData(stockData) {
+export function fetchStockData() {
   return dispatch => {
     return dispatch({
       type: 'FETCH_STOCKDATA',
-      payload: axios.get(getUrl)
+      payload: axios.post(getUrl, {})
         .then( (response) =>  {
             dispatch(setStockData(response))      
          })
@@ -30,7 +30,7 @@ export function fetchStockData(stockData) {
 
 
 export function saveStockData(stockData) {
-  return dispatch=> {
+  return dispatch => {
     return dispatch({
       type: 'SAVE_STOCKDATA',
       stockData,
