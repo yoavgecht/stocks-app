@@ -2,7 +2,8 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import axios from 'axios';
 import { Grid, Row, Col, Button } from 'react-bootstrap';
-import TableComponent from './components/table/TableComponent'; 
+import TableComponent from './components/table/TableComponent';
+import SearchedListComponent from './components/searched/SearchesListComponent';  
 import Input from './components/form/Input/Input';
 import { saveStockData, deleteStockData } from './actions/data-actions';
 import moment from 'moment';
@@ -45,7 +46,7 @@ class App extends Component {
       },
       isFormValid: false,
       tickerData: null,
-      startDate: null
+      searchHistory: []
     };
 
     //validation function - checking for the rules we defined on the quandl form data state object
@@ -131,7 +132,7 @@ class App extends Component {
         //posting the form data to the server
         axios.post('/api/get-ticker-data', {formData}).then( (response) =>  {
              console.log(response);    
-             this.setState({tickerData: response.data.data.dataset})  
+             this.setState({tickerData: response.data.data.dataset, searchHistory: [...this.state.searchHistory, response.data.data.dataset.dataset_code]})  
          });
     }
 
@@ -183,9 +184,17 @@ class App extends Component {
      return (
        <Grid>
          <Row>
-            <Col xs={12} sm={12} md={12}>
+            <Col xs={12} sm={12} md={4}>
           {form}
            </Col>
+             <Col xs={12} sm={12} md={4}>
+            
+           </Col>
+           <Col xs={12} sm={12} md={4}>
+                {this.state.searchHistory && <SearchedListComponent searchHistory={this.state.searchHistory} />}
+           </Col>
+           </Row>
+           <Row>
             <Col xs={12} sm={12} md={12}>
                  {this.state.tickerData && <TableComponent tickerData={this.state.tickerData}/> }
             </Col>
@@ -193,7 +202,7 @@ class App extends Component {
         <Row>
          {this.state.tickerData && 
             <Col xs={12} sm={12} md={12}>
-           
+
             <Button
             style={{marginTop: 20}} 
             bsStyle="success" 
