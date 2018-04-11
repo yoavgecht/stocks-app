@@ -193,7 +193,7 @@ class App extends Component {
             
            </Col>
            <Col xs={12} sm={12} md={4}>
-                 <SearchedListComponent deleteStock={this.deleteStockDataHandler} searchHistory={this.props.searchHistory} />
+                {this.props.searchHistory && <SearchedListComponent deleteStock={this.deleteStockDataHandler} searchHistory={this.props.searchHistory} />}
            </Col>
            </Row>
            <Row>
