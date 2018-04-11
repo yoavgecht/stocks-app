@@ -76,7 +76,7 @@ app.use(express.static(path.join(__dirname, '../build')))
         app.get('/api/get-search-history-data', (req, res, next) => {
               db = client.db('stockdata');
               var collection = db.collection('stockdata');
-              collection.find({ dataset_code: req.params.stock }, function(err, data){
+              collection.find({}, function(err, data){
                 console.log('DATA FROM FINDING:', data);
                     res.json(data);
                 });
