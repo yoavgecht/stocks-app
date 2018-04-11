@@ -46,7 +46,7 @@ class App extends Component {
       },
       isFormValid: false,
       tickerData: null,
-      searchHistory: []
+      searchHistory: null
     };
 
     //validation function - checking for the rules we defined on the quandl form data state object
@@ -139,7 +139,7 @@ class App extends Component {
     saveStockDataHandler = () => {
         var data = this.state.tickerData;
         this.props.saveStockData(data).then(res => {
-            console.log(res);
+            console.log(this.state.searchHistory);
         });
     }
 
@@ -228,7 +228,8 @@ class App extends Component {
 // Make data  array available in  props
 function mapStateToProps(state) {
   return {
-      data : state.tickerData
+      data : state.tickerData,
+      searchHistory: state.searchHistory
   }
 }
 
