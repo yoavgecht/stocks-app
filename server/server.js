@@ -31,10 +31,10 @@ app.use(express.static(path.join(__dirname, '../build')))
 })
 
 
-    mongodb.MongoClient.connect(dbUrl, (err, database) => {
+    mongodb.MongoClient.connect(dbUrl, (err, client) => {
         app.post('/api/save-ticker-data', (req, res, next) => {
             console.log(req.body);
-            db = database;
+            db = client.db('stockdata');
             if (err) throw err;
 		    console.log('Connection Established');
 
@@ -55,8 +55,7 @@ app.use(express.static(path.join(__dirname, '../build')))
                         dataset_code: req.body.dataset_code,
                         database_code: req.body.database_code,
                         name: req.body.name,
-                        description: req.body.description
-                        
+                        description: req.body.description 
                     }
 
                     collection.insert(stockData, function(err, data){
