@@ -8,7 +8,8 @@ const SearchedListComponent = (props) => (
         
             {props.searchHistory.map((item, i) =>
             <ListGroupItem>
-                {item}
+               <p>{item.dataset_code}</p> 
+               <span class="glyphicon glyphicon-remove"  onClick={() => props.deleteStock(item.dataset_code)}></span> 
             </ListGroupItem>
         )}
     </ListGroup>  

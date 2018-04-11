@@ -132,7 +132,7 @@ class App extends Component {
         //posting the form data to the server
         axios.post('/api/get-ticker-data', {formData}).then( (response) =>  {
              console.log(response);    
-             this.setState({tickerData: response.data.data.dataset, searchHistory: [...this.state.searchHistory, response.data.data.dataset.dataset_code]})  
+             this.setState({tickerData: response.data.data.dataset, searchHistory: [...this.state.searchHistory, response.data.data.dataset]})  
          });
     }
 
@@ -141,8 +141,7 @@ class App extends Component {
         this.props.saveStockData(data);
     }
 
-    deleteStockDataHandler = () => {
-        var stock = this.state.tickerData.dataset_code;
+    deleteStockDataHandler = (stock) => {
         this.props.deleteStockData(stock);
     }
 
@@ -191,7 +190,7 @@ class App extends Component {
             
            </Col>
            <Col xs={12} sm={12} md={4}>
-                {this.state.searchHistory && <SearchedListComponent searchHistory={this.state.searchHistory} />}
+                {this.state.searchHistory && <SearchedListComponent deleteStock={this.deleteStockDataHandler} searchHistory={this.state.searchHistory} />}
            </Col>
            </Row>
            <Row>
