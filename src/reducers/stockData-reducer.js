@@ -1,5 +1,6 @@
 const defaultState = {
-  data: []
+  data: [],
+  searchHistory: []
 }
 
 export default (state=defaultState, action={}) => {
@@ -15,6 +16,13 @@ export default (state=defaultState, action={}) => {
       return {
         ...state,
         data: action.payload
+      }
+    }
+
+    case 'SET_STOCKDATA': {
+      return {
+         ...state,
+         searchHistory: [...state.searchHistory, action.stockData.data.ops[0]]
       }
     }
 

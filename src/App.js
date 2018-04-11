@@ -2,9 +2,10 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import axios from 'axios';
 import { Grid, Row, Col, Button } from 'react-bootstrap';
-import TableComponent from './components/table/TableComponent'; 
+import TableComponent from './components/table/TableComponent';
+import SearchedListComponent from './components/searched/SearchesListComponent';  
 import Input from './components/form/Input/Input';
-import { saveStockData, deleteStockData } from './actions/data-actions';
+import { saveStockData, deleteStockData, fetchStockData } from './actions/data-actions';
 import moment from 'moment';
 
 
@@ -45,10 +46,14 @@ class App extends Component {
       },
       isFormValid: false,
       tickerData: null,
-      startDate: null
+      searchHistory: null
     };
 
     //validation function - checking for the rules we defined on the quandl form data state object
+
+    componentDidMount(){
+        this.getStockData();
+    }
 
     checkValidation(value, rules) {
        let isValid = true;
@@ -135,13 +140,20 @@ class App extends Component {
          });
     }
 
-    saveStockDataHandler = () => {
-        var data = this.state.tickerData;
-        this.props.saveStockData(data);
+    getStockData = () => {
+         this.props.fetchStockData().then(res => {
+             this.setState({searchHistory: this.props.searchHistory}) 
+        });
     }
 
-    deleteStockDataHandler = () => {
-        var stock = this.state.tickerData.dataset_code;
+    saveStockDataHandler = () => {
+        var data = this.state.tickerData;
+        this.props.saveStockData(data).then(res => {
+             this.setState({searchHistory: this.props.searchHistory}) 
+        });
+    }
+
+    deleteStockDataHandler = (stock) => {
         this.props.deleteStockData(stock);
     }
 
@@ -183,9 +195,17 @@ class App extends Component {
      return (
        <Grid>
          <Row>
-            <Col xs={12} sm={12} md={12}>
+            <Col xs={12} sm={12} md={4}>
           {form}
            </Col>
+             <Col xs={12} sm={12} md={4}>
+            
+           </Col>
+           <Col xs={12} sm={12} md={4}>
+                {this.props.searchHistory.length > 0 && <SearchedListComponent deleteStock={this.deleteStockDataHandler} searchHistory={this.props.searchHistory} />}
+           </Col>
+           </Row>
+           <Row>
             <Col xs={12} sm={12} md={12}>
                  {this.state.tickerData && <TableComponent tickerData={this.state.tickerData}/> }
             </Col>
@@ -193,7 +213,7 @@ class App extends Component {
         <Row>
          {this.state.tickerData && 
             <Col xs={12} sm={12} md={12}>
-           
+
             <Button
             style={{marginTop: 20}} 
             bsStyle="success" 
@@ -218,9 +238,10 @@ class App extends Component {
 // Make data  array available in  props
 function mapStateToProps(state) {
   return {
-      data : state.tickerData
+      data : state.tickerData,
+      searchHistory: state.dataReducer.searchHistory
   }
 }
 
-export default connect(mapStateToProps, {saveStockData, deleteStockData})(App);
+export default connect(mapStateToProps, {saveStockData, deleteStockData, fetchStockData})(App);
 
