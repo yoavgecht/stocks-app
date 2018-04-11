@@ -22,7 +22,7 @@ export default (state=defaultState, action={}) => {
        case 'SET_STOCKDATA': {
       return {
          ...state,
-         searchHistory: [...state.searchHistory, action.stockData]
+         searchHistory: [...state.searchHistory, action.stockData.data.ops[0]]
       }
     }
 
