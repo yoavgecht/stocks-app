@@ -66,16 +66,23 @@ app.use(express.static(path.join(__dirname, '../build')))
                     });
             });
 
-        app.delete('/api/delete-ticker-data/:stock', (req, res, next) => {
-            console.log('param', req.params.stockId);
+        app.delete(`/api/delete-ticker-data/:id`, (req, res, next) => {
+            console.log('req.params.id', req.params.id);
             db = client.db('stockdata');
             var collection = db.collection('stockdata');
             var obj_id = new require('mongodb').ObjectID(req.params.id);
-            collection.remove({_id: obj_id},{justOne: true}, function(){
-                res.json(null);
+            collection.remove({_id: obj_id} ,{justOne: true}, () => {
+                 collection.find({}).toArray(function(err, data){
+                if(err) throw err;
+                console.log('data');
+                console.log(data);
+                res.json(data);
             });
+            });
+           
         });
 
+        //GET IS NOT WORKING SO USED POST
         app.post('/api/get-history-data', (req, res, next) => {
               console.log('/api/get-search-history-data');
               db = client.db('stockdata');

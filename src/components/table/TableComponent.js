@@ -17,8 +17,8 @@ const TableComponent = (props) => (
         {props.tickerData.data.map((item, i) =>
         <tr key={i}>
             <td>{item[0]}</td>
+            <td>{item[4]}</td>
             <td></td>
-            <td>{item[1]}</td>
         </tr>
         )}
     </tbody>

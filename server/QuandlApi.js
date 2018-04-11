@@ -2,9 +2,8 @@ const request = require('request');
 
 var getRows = (formData, callback) => {
     console.log('formData', formData);
-    console.log(`https://www.quandl.com/api/v3/datasets/WIKI/${formData.userInputs.ticker}.json?column_index=4&start_date=${formData.userInputs.startDate}&end_date=${formData.userInputs.endDate}&collapse=monthly&transform=rdiff&api_key=Vk29NQzysMurK6sfhDxw`)
     request({
-        url: `https://www.quandl.com/api/v3/datasets/WIKI/${formData.userInputs.ticker}.json?start_date=${formData.userInputs.startDate}&end_date=${formData.userInputs.endDate}&collapse=monthly&key=Vk29NQzysMurK6sfhDxw`,
+        url: `https://www.quandl.com/api/v3/datasets/WIKI/${formData.userInputs.ticker}.json?start_date=${formData.userInputs.startDate}&end_date=${formData.userInputs.endDate}&collapse=daily&key=Vk29NQzysMurK6sfhDxw`,
         json: true 
     }, (error, response, body) => {
         if(error) {

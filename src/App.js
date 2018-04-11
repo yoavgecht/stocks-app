@@ -154,7 +154,9 @@ class App extends Component {
     }
 
     deleteStockDataHandler = (stockId) => {
-        this.props.deleteStockData(stockId);
+        this.props.deleteStockData(stockId).then(res => {
+             this.setState({searchHistory: this.props.searchHistory}) 
+        });
     }
 
   render() {
