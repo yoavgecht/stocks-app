@@ -4,7 +4,7 @@ import axios from 'axios';
 import { Grid, Row, Col, Button } from 'react-bootstrap';
 import TableComponent from './components/table/TableComponent'; 
 import Input from './components/form/Input/Input';
-import { saveStockData } from './actions/data-actions';
+import { saveStockData, deleteStockData } from './actions/data-actions';
 import moment from 'moment';
 
 

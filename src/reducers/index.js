@@ -1,5 +1,5 @@
 import { combineReducers } from 'redux';
-import DataReducer from './data-reducer';
+import DataReducer from './stockData-reducer';
 
 const reducers = {
   dataReducer: DataReducer
