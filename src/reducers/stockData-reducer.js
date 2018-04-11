@@ -7,10 +7,20 @@ export default (state=defaultState, action={}) => {
     case 'SAVE_STOCKDATA': {
       return {
         ...state,
-        contacts: action.payload
+        data: action.payload
       }
     }
+
+     case 'DELETE_STOCKDATA': {
+      return {
+        ...state,
+        data: action.payload
+      }
+    }
+
+
     default:
       return state;
   }
 }
+

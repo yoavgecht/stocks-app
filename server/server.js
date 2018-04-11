@@ -37,7 +37,6 @@ app.use(express.static(path.join(__dirname, '../build')))
             db = client.db('stockdata');
             if (err) throw err;
 		    console.log('Connection Established');
-
             db.listCollections({name: 'stockdata'})
                 .next(function(err, collinfo) {
                     if (collinfo) {
@@ -47,7 +46,6 @@ app.use(express.static(path.join(__dirname, '../build')))
                     } else{
                         db.createCollection("stockdata");
                         console.log(db.collection('stockdata'));
-
                     }
    		        });
                     var collection = db.collection('stockdata');
@@ -62,13 +60,25 @@ app.use(express.static(path.join(__dirname, '../build')))
                         res.json(data);
                     });
             });
-        })
+
+        app.delete('/api/delete-ticker-data', (req, res, next) => {
+            console.log(req.body);
+            db = client.db('stockdata');
+            var collection = db.collection('stockdata');
+            collection.findOne({ dataset_code: req.body.dataset_code }, function(err, data){
+							console.log(data._id);
+                collection.remove({_id: data._id},{justOne: true}, function(){
+			 					res.json(null);
+			 			});
+            });
+            
 
 
-.delete('/api/delete-ticker-data', (req, res, next) => {
-    
-    
-});
+        });
+    })
+
+
+
 
 
 

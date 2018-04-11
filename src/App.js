@@ -140,6 +140,11 @@ class App extends Component {
         this.props.saveStockData(data);
     }
 
+    deleteStockDataHandler = () => {
+        var stock = this.state.tickerData.dataset_code;
+        this.props.deleteStockData(stock);
+    }
+
   render() {
       //looping on the quandl form state obj and pushing the id and every input type(first name, last name....)
       const contactForm = [];
@@ -194,16 +199,14 @@ class App extends Component {
             bsStyle="success" 
             bsSize="large" 
             disabled={!this.state.isFormValid}
-            onClick={this.saveStockDataHandler}
-
-            >Save</Button>
+            onClick={this.saveStockDataHandler}>Save</Button>
 
             <Button
             style={{marginTop: 20}} 
             bsStyle="success" 
             bsSize="large" 
             disabled={!this.state.isFormValid} 
-            onClick={this.formSubmit}>Delete</Button>
+            onClick={this.deleteStockDataHandler}>Delete</Button>
             </Col>
          }
         </Row> 
@@ -219,5 +222,5 @@ function mapStateToProps(state) {
   }
 }
 
-export default connect(mapStateToProps, {saveStockData})(App);
+export default connect(mapStateToProps, {saveStockData, deleteStockData})(App);
 
