@@ -65,10 +65,10 @@ app.use(express.static(path.join(__dirname, '../build')))
         })
 
 
-// .post('/api/delete-ticker-data', (req, res, next) => {
+.delete('/api/delete-ticker-data', (req, res, next) => {
     
     
-// });
+});
 
 
 
