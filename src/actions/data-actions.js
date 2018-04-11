@@ -4,7 +4,7 @@ const saveUrl = '/api/save-ticker-data';
 const SET_STOCKDATA = "SET_STOCKDATA"
 
 export function setStockData(stockData) {
-  return dispatch=> {
+  return dispatch => {
     return dispatch({
       type: SET_STOCKDATA,
       stockData,

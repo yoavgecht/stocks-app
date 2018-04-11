@@ -5,7 +5,7 @@ import { Grid, Row, Col, Button } from 'react-bootstrap';
 import TableComponent from './components/table/TableComponent';
 import SearchedListComponent from './components/searched/SearchesListComponent';  
 import Input from './components/form/Input/Input';
-import { saveStockData, deleteStockData } from './actions/data-actions';
+import { saveStockData, deleteStockData, setStockData } from './actions/data-actions';
 import moment from 'moment';
 
 
@@ -139,7 +139,7 @@ class App extends Component {
     saveStockDataHandler = () => {
         var data = this.state.tickerData;
         this.props.saveStockData(data).then(res => {
-             this.setState({searchHistory: this.state.searchHistory}) 
+             this.setState({searchHistory: this.props.searchHistory}) 
             
         });
     }
@@ -230,9 +230,9 @@ class App extends Component {
 function mapStateToProps(state) {
   return {
       data : state.tickerData,
-      searchHistory: state.searchHistory
+      searchHistory: state.dataReducer.searchHistory
   }
 }
 
-export default connect(mapStateToProps, {saveStockData, deleteStockData})(App);
+export default connect(mapStateToProps, {saveStockData, deleteStockData, setStockData})(App);
 
