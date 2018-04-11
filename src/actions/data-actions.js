@@ -11,14 +11,11 @@ export function saveStockData(stockData) {
   }
 }
 
-const stock = '';
-const deleteUrl = `/api/delete-ticker-data/:${stock}`;
-
 export function deleteStockData(stock) {
   return dispatch => {
     return dispatch({
       type: 'DELETE_STOCKDATA',
-      payload: axios.post(deleteUrl, {data: stock})
+      payload: axios.delete(`/api/delete-ticker-data/:${stock}`)
     })
   }
 }

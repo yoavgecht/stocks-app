@@ -61,12 +61,12 @@ app.use(express.static(path.join(__dirname, '../build')))
                     });
             });
 
-        app.post('/api/delete-ticker-data', (req, res, next) => {
-            console.log('DELETE', req.body);
+        app.delete('/api/delete-ticker-data/:stock', (req, res, next) => {
+            console.log('param', req.params.stock);
             db = client.db('stockdata');
             var collection = db.collection('stockdata');
-            collection.findOne({ dataset_code: req.body.dataset_code }, function(err, data){
-							console.log(data);
+            collection.find({ dataset_code: req.params.stock }, function(err, data){
+							console.log('DATA FROM FINDING:', data);
                 collection.remove({_id: data._id},{justOne: true}, function(){
 			 					res.json(null);
 			 			});
