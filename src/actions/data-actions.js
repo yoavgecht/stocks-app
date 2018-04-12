@@ -23,11 +23,13 @@ export function setData(stockData) {
   }
 }
 
-export function showClickedSearchItem(stock) {
+export function showClickedSearchItem(searchDate, stockName) {
   return dispatch => {
     return dispatch({
       type: 'SHOW_CLICKED_SEARCHED_ITEM',
-      payload: axios.post(getSearchedItemClickedUrl, {stockId: stock})
+      searchDate,
+      stockName,
+      payload: axios.post(getSearchedItemClickedUrl, {date: searchDate, name: stockName})
         .then( (response) =>  {
             dispatch(setData(response.data))      
          })

@@ -169,9 +169,8 @@ class App extends Component {
     });
   };
 
-  showSearchedDataHandler = (stockId) => {
-    console.log(stockId);
-    this.props.showClickedSearchItem(stockId).then(res => {
+  showSearchedDataHandler = (searchDate, stockName) => {
+    this.props.showClickedSearchItem(searchDate, stockName).then(res => {
       this.setState({ tickerData: this.props.data[0][0] });
     });
   }

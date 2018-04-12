@@ -122,22 +122,6 @@ mongodb.MongoClient.connect(dbUrl, (err, client) => {
             });
         });
 
-        app.post('/api/get-searched-item-data', (req, res, next) => {
-              console.log('REQ.BODY', req.body);
-              db = client.db('stockDataDb');
-              var collection = db.collection('stockDataDb');
-              var obj_id = new require('mongodb').ObjectID(req.body.stockId);
-              collection.find({_id: obj_id}).toArray(function(err, data){
-                if(err) throw err;
-                console.log('data');
-                console.log(data);
-                res.json(data);
-            });
-        });
-        
-       
-
-
     var collection = db.collection("stockDataDb");
     collection.insert(lastSearchData.data.dataset, function(err, data) {
       if (err) throw err;
@@ -178,11 +162,11 @@ mongodb.MongoClient.connect(dbUrl, (err, client) => {
   });
 
   app.post("/api/get-searched-item-data", (req, res, next) => {
-    console.log("REQ.BODY", req.body.stockId);
+    console.log("REQ.BODY", req.body);
     db = client.db("stockDataDb");
     var collection = db.collection("stockDataDb");
-    var obj_id = new require("mongodb").ObjectID(req.body.stockId);
-    collection.find({_id: obj_id})
+    collection
+      .find({ start_date: req.body.date, dataset_code: req.body.name })
       .toArray(function(err, data) {
         if (err) throw err;
         console.log("data");
@@ -191,6 +175,7 @@ mongodb.MongoClient.connect(dbUrl, (err, client) => {
       });
   });
 });
+
 
 app.listen(port);
 console.log("listening on " + port);

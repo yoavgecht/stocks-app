@@ -7,14 +7,11 @@ const SearchedListComponent = props => (
     <label>Search history:</label>
     <ListGroup>
       {props.searchHistory.map((item, i) => (
-
         <ListGroupItem item={item} key={item._id} className="list-group-class">
           <span 
-          
             onClick={() =>
-              props.showSearchedData(item._id) 
-            }
-          >
+              props.showSearchedData(item.start_date, item.dataset_code) 
+            }>
             <strong>
               {item.dataset_code} - {item.start_date}
             </strong>
