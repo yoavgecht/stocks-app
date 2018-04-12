@@ -17,7 +17,7 @@ const SearchedListComponent = props => (
             </strong>
           </span>
           <span
-            className="glyphicon glyphicon-trash pull-right"
+            className="glyphicon glyphicon-trash pull-right text-danger"
             onClick={() => props.deleteStock(item._id)}
           />
         </ListGroupItem>
