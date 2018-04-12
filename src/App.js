@@ -2,15 +2,14 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import axios from "axios";
 import { Grid, Row, Col, Button } from "react-bootstrap";
-import { PulseLoader } from "react-spinners";
-
 import TableComponent from "./components/table/TableComponent";
 import SearchedListComponent from "./components/searched/SearchesListComponent";
 import Input from "./components/form/Input/Input";
 import {
   saveStockData,
   deleteStockData,
-  fetchStockData
+  fetchStockData,
+  showClickedSearchItem
 } from "./actions/data-actions";
 
 import Header from "./components/Header";
@@ -25,7 +24,7 @@ class App extends Component {
         elementType: "input",
         elementConfig: {
           type: "text",
-          placeholder: "i.e - FB, FRED"
+          placeholder: "i.e - FB"
         },
         value: "",
         validation: {
@@ -163,15 +162,17 @@ class App extends Component {
     });
   };
 
-  deleteStockDataHandler = stockId => {
+  deleteStockDataHandler = (stockId) => {
     this.props.deleteStockData(stockId).then(res => {
       this.setState({ searchHistory: this.props.searchHistory });
     });
   };
 
-  showSearchedDataHandler = stockId => {
-    this.getStockData(stockId);
-  };
+  showSearchedDataHandler = (searchDate, stockName) => {
+    this.props.showClickedSearchItem(searchDate, stockName).then(res => {
+      this.setState({ tickerData: res.data.data.dataset });
+    });
+  }
 
   render() {
     //looping on the quandl form state obj and pushing the id and every input type(first name, last name....)
@@ -222,11 +223,6 @@ class App extends Component {
         <Row>
           <Col xs={12} sm={12} md={8}>
             {form}
-            <br />
-            <PulseLoader
-              color={"#5cb85c"}
-              loading={this.props.readyState === "loading"}
-            />
           </Col>
           <Col xs={12} sm={12} md={4} />
           <Col xs={12} sm={12} md={4}>
@@ -275,13 +271,13 @@ class App extends Component {
 function mapStateToProps(state) {
   return {
     data: state.tickerData,
-    searchHistory: state.dataReducer.searchHistory,
-    readyState: state.dataReducer.readyState
+    searchHistory: state.dataReducer.searchHistory
   };
 }
 
 export default connect(mapStateToProps, {
   saveStockData,
   deleteStockData,
-  fetchStockData
+  fetchStockData,
+  showClickedSearchItem
 })(App);
