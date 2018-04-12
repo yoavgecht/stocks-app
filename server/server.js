@@ -53,7 +53,8 @@ app.use(express.static(path.join(__dirname, '../build')))
                         dataset_code: req.body.dataset_code,
                         database_code: req.body.database_code,
                         name: req.body.name,
-                        description: req.body.description 
+                        description: req.body.description,
+                        start_date: req.body.start_date  
                     }
 
                     collection.insert(stockData, function(err, data){
