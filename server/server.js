@@ -196,7 +196,6 @@ mongodb.MongoClient.connect(dbUrl, (err, client) => {
       });
   });
 });
->>>>>>> 003d23ac75fb41d342e0e13c329276031fb294d9
 
 app.listen(port);
 console.log("listening on " + port);
