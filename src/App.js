@@ -170,7 +170,7 @@ class App extends Component {
 
   showSearchedDataHandler = (searchDate, stockName) => {
     this.props.showClickedSearchItem(searchDate, stockName).then(res => {
-      this.setState({ tickerData: this.props.data.data });
+      this.setState({ tickerData: this.props.data[0][0] });
     });
   }
 
@@ -270,7 +270,7 @@ class App extends Component {
 // Make data  array available in  props
 function mapStateToProps(state) {
   return {
-    data: state.dataReducer.data[0],
+    data: state.dataReducer.data,
     searchHistory: state.dataReducer.searchHistory
   };
 }
