@@ -1,66 +1,60 @@
-import axios from 'axios';
+import axios from "axios";
 
-const saveUrl = '/api/save-ticker-data';
-const getUrl = '/api/get-history-data';
-
-
+const saveUrl = "/api/save-ticker-data";
+const getUrl = "/api/get-history-data";
 
 export function showClickedSearchItem(stock) {
   return dispatch => {
     return dispatch({
-      type: 'FETCH_STOCKDATA',
-      payload: axios.post(getUrl, stock)
-        .then( (response) =>  {
-            dispatch(setStockData(response))      
-         })
+      type: "FETCH_STOCKDATA",
+      payload: axios.post(getUrl, stock).then(response => {
+        dispatch(setStockData(response));
       })
-  }
+    });
+  };
 }
-
-
 
 export function setStockData(stockData) {
   return dispatch => {
     return dispatch({
-      type: 'SET_STOCKDATA',
-      stockData,
-      })
-  }
+      type: "SET_STOCKDATA",
+      stockData
+    });
+  };
 }
 
 export function fetchStockData(stock) {
   return dispatch => {
     return dispatch({
-      type: 'FETCH_STOCKDATA',
-      payload: axios.post(getUrl, stock)
-        .then( (response) =>  {
-            dispatch(setStockData(response))      
-         })
+      type: "FETCH_STOCKDATA",
+      payload: axios.post(getUrl, stock).then(response => {
+        dispatch(setStockData(response));
       })
-  }
+    });
+  };
 }
-
 
 export function saveStockData(stockData) {
   return dispatch => {
     return dispatch({
-      type: 'SAVE_STOCKDATA',
+      type: "SAVE_STOCKDATA",
       stockData,
-      payload: axios.post(saveUrl, stockData)
-        .then( (response) =>  {
-            dispatch(setStockData(response))      
-         })
+      payload: axios.post(saveUrl, stockData).then(response => {
+        dispatch(setStockData(response));
       })
-  }
+    });
+  };
 }
 
 export function deleteStockData(stock) {
   return dispatch => {
     return dispatch({
-      type: 'DELETE_STOCKDATA',
-      payload: axios.delete(`/api/delete-ticker-data/${stock}`).then( (response) =>  {
-          dispatch(setStockData(response))      
-      })
-    })
-  }
+      type: "DELETE_STOCKDATA",
+      payload: axios
+        .delete(`/api/delete-ticker-data/${stock}`)
+        .then(response => {
+          dispatch(setStockData(response));
+        })
+    });
+  };
 }
