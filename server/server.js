@@ -93,7 +93,6 @@ mongodb.MongoClient.connect(dbUrl, (err, client) => {
       }
     });
 
-<<<<<<< HEAD
         app.delete(`/api/delete-ticker-data/:id`, (req, res, next) => {
             console.log('req.params.id', req.params.id);
             db = client.db('savedSearchesDb');
@@ -139,10 +138,6 @@ mongodb.MongoClient.connect(dbUrl, (err, client) => {
         });
 
 
-
-
-
-=======
     var collection = db.collection("stockDataDb");
     collection.insert(lastSearchData.data.dataset, function(err, data) {
       if (err) throw err;
