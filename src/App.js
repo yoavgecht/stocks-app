@@ -161,11 +161,15 @@ class App extends Component {
     });
   };
 
-  deleteStockDataHandler = stockId => {
+  deleteStockDataHandler = (stockId) => {
     this.props.deleteStockData(stockId).then(res => {
       this.setState({ searchHistory: this.props.searchHistory });
     });
   };
+
+  showSearchedDataHandler = (stockId) => {
+    this.getStockData(stockId);
+  }
 
   render() {
     //looping on the quandl form state obj and pushing the id and every input type(first name, last name....)
@@ -221,6 +225,7 @@ class App extends Component {
           <Col xs={12} sm={12} md={4}>
             {this.props.searchHistory.length > 0 && (
               <SearchedListComponent
+                showSearchedData={this.showSearchedDataHandler}
                 deleteStock={this.deleteStockDataHandler}
                 searchHistory={this.props.searchHistory}
               />

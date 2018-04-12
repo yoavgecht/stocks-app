@@ -5,6 +5,18 @@ const getUrl = '/api/get-history-data';
 
 
 
+export function showClickedSearchItem(stock) {
+  return dispatch => {
+    return dispatch({
+      type: 'FETCH_STOCKDATA',
+      payload: axios.post(getUrl, stock)
+        .then( (response) =>  {
+            dispatch(setStockData(response))      
+         })
+      })
+  }
+}
+
 
 
 export function setStockData(stockData) {
@@ -16,11 +28,11 @@ export function setStockData(stockData) {
   }
 }
 
-export function fetchStockData() {
+export function fetchStockData(stock) {
   return dispatch => {
     return dispatch({
       type: 'FETCH_STOCKDATA',
-      payload: axios.post(getUrl, {})
+      payload: axios.post(getUrl, stock)
         .then( (response) =>  {
             dispatch(setStockData(response))      
          })

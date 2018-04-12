@@ -94,7 +94,24 @@ app.use(express.static(path.join(__dirname, '../build')))
                 console.log(data);
                 res.json(data);
             });
+        });
+
+        app.post('/api/get-searched-item-data', (req, res, next) => {
+              console.log(req.body);
+              db = client.db('stockdata');
+              var collection = db.collection('stockdata');
+              var obj_id = new require('mongodb').ObjectID(req.body.id);
+              collection.find({_id: obj_id}).toArray(function(err, data){
+                if(err) throw err;
+                console.log('data');
+                console.log(data);
+                res.json(data);
             });
+        });
+        
+        
+
+
         });
 
 
