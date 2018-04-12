@@ -1,6 +1,7 @@
 import React from "react";
 import classes from "./Input.css";
 import DatePicker from "react-datepicker";
+import moment from 'moment';
 
 const Input = props => {
   let inputElem = null;
@@ -29,8 +30,10 @@ const Input = props => {
           {...props.elementConfig}
           value={props.selectedDate}
           dateFormat="MM/DD/YYYY"
+          maxDate={moment()}
           isClearable={true}
           onChange={props.changed}
+
         />
       );
       break;

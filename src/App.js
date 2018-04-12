@@ -270,7 +270,7 @@ class App extends Component {
 // Make data  array available in  props
 function mapStateToProps(state) {
   return {
-    data: state.tickerData,
+    data: state.dataReducer.tickerData,
     searchHistory: state.dataReducer.searchHistory
   };
 }

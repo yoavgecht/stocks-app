@@ -35,6 +35,13 @@ export default (state = defaultState, action = {}) => {
       };
     }
 
+    case "SET_DATA": {
+      return {
+        ...state,
+        data: [action.stockData.data]
+      };
+    }
+
     default:
       return state;
   }

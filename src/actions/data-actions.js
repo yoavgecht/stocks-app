@@ -5,26 +5,34 @@ const getUrl = '/api/get-history-data';
 const getSearchedItemClickedUrl = '/api/get-searched-item-data';
 
 
-
-export function showClickedSearchItem(searchDate, stockName) {
-  return dispatch => {
-    return dispatch({
-      type: 'FETCH_STOCKDATA',
-      payload: axios.post(getSearchedItemClickedUrl, {date: searchDate, name: stockName})
-        .then( (response) =>  {
-            dispatch(setStockData(response))      
-         })
-      })
-  }
-}
-
-
-
 export function setStockData(stockData) {
   return dispatch => {
     return dispatch({
       type: 'SET_STOCKDATA',
       stockData,
+      })
+  }
+}
+
+export function setData(stockData) {
+  return dispatch => {
+    return dispatch({
+      type: 'SET_DATA',
+      stockData,
+      })
+  }
+}
+
+export function showClickedSearchItem(searchDate, stockName) {
+  return dispatch => {
+    return dispatch({
+      type: 'SHOW_CLICKED_SEARCHED_ITEM',
+      searchDate,
+      stockName,
+      payload: axios.post(getSearchedItemClickedUrl, {date: searchDate, name: stockName})
+        .then( (response) =>  {
+            dispatch(setData(response.data))      
+         })
       })
   }
 }
