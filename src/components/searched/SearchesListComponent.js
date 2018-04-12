@@ -6,7 +6,7 @@ const SearchedListComponent = props => (
     <label>Search history:</label>
     <ListGroup>
       {props.searchHistory.map((item, i) => (
-        <ListGroupItem item={item} key={item._id}>
+        <ListGroupItem item={item._id} key={item._id}>
           <span
             onClick={() =>
               props.showSearchedData(item.start_date, item.dataset_code)
