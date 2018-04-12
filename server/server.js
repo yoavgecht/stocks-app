@@ -127,7 +127,7 @@ mongodb.MongoClient.connect(dbUrl, (err, client) => {
               db = client.db('stockDataDb');
               var collection = db.collection('stockDataDb');
               var obj_id = new require('mongodb').ObjectID(req.body.stockId);
-              collection.find({obj_id: obj_id}).toArray(function(err, data){
+              collection.find({_id: obj_id}).toArray(function(err, data){
                 if(err) throw err;
                 console.log('data');
                 console.log(data);
@@ -178,11 +178,11 @@ mongodb.MongoClient.connect(dbUrl, (err, client) => {
   });
 
   app.post("/api/get-searched-item-data", (req, res, next) => {
-    console.log("REQ.BODY", req.body);
+    console.log("REQ.BODY", req.body.stockId);
     db = client.db("stockDataDb");
     var collection = db.collection("stockDataDb");
     var obj_id = new require("mongodb").ObjectID(req.body.stockId);
-    collection.find({obj_id: obj_id})
+    collection.find({_id: obj_id})
       .toArray(function(err, data) {
         if (err) throw err;
         console.log("data");

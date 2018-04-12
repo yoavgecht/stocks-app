@@ -27,7 +27,7 @@ export function showClickedSearchItem(stock) {
   return dispatch => {
     return dispatch({
       type: 'SHOW_CLICKED_SEARCHED_ITEM',
-      payload: axios.post(getSearchedItemClickedUrl, stock)
+      payload: axios.post(getSearchedItemClickedUrl, {stockId: stock})
         .then( (response) =>  {
             dispatch(setData(response.data))      
          })
