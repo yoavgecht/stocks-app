@@ -2,6 +2,8 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import axios from "axios";
 import { Grid, Row, Col, Button } from "react-bootstrap";
+import { PulseLoader } from "react-spinners";
+
 import TableComponent from "./components/table/TableComponent";
 import SearchedListComponent from "./components/searched/SearchesListComponent";
 import Input from "./components/form/Input/Input";
@@ -220,6 +222,11 @@ class App extends Component {
         <Row>
           <Col xs={12} sm={12} md={8}>
             {form}
+            <br />
+            <PulseLoader
+              color={"#5cb85c"}
+              loading={this.props.readyState === "loading"}
+            />
           </Col>
           <Col xs={12} sm={12} md={4} />
           <Col xs={12} sm={12} md={4}>
@@ -268,7 +275,8 @@ class App extends Component {
 function mapStateToProps(state) {
   return {
     data: state.tickerData,
-    searchHistory: state.dataReducer.searchHistory
+    searchHistory: state.dataReducer.searchHistory,
+    readyState: state.dataReducer.readyState
   };
 }
 
