@@ -135,7 +135,7 @@ mongodb.MongoClient.connect(dbUrl, (err, client) => {
             });
         });
         
-        });
+       
 
 
     var collection = db.collection("stockDataDb");
