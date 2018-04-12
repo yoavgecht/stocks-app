@@ -30,7 +30,7 @@ class App extends Component {
         validation: {
           required: true,
           minLength: 2,
-          isAlphabet: true
+          isAlphanumeric: true
         },
         valid: false,
         touched: false
@@ -79,8 +79,8 @@ class App extends Component {
       isValid = value.length <= rules.maxLength && isValid;
     }
 
-    if (rules.isAlphabet) {
-      const pattern = /^[a-zA-Z]+$/;
+    if (rules.isAlphanumeric) {
+      const pattern = /^([a-zA-Z0-9 _-]+)$/;
       isValid = pattern.test(value) && isValid;
     }
 
