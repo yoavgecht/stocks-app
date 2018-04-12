@@ -6,16 +6,18 @@ const SearchedListComponent = props => (
     <label>Search history:</label>
     <ListGroup>
       {props.searchHistory.map((item, i) => (
-        <ListGroupItem
-          item={item}
-        >
-          <span onClick={() => props.showSearchedData(item.start_date, item.dataset_code)}>
+        <ListGroupItem item={item} key={item._id}>
+          <span
+            onClick={() =>
+              props.showSearchedData(item.start_date, item.dataset_code)
+            }
+          >
             <strong>
               {item.dataset_code} - {item.start_date}
             </strong>
           </span>
           <span
-            class="glyphicon glyphicon-trash pull-right"
+            className="glyphicon glyphicon-trash pull-right"
             onClick={() => props.deleteStock(item._id)}
           />
         </ListGroupItem>
