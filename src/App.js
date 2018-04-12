@@ -23,7 +23,7 @@ class App extends Component {
         elementType: "input",
         elementConfig: {
           type: "text",
-          placeholder: "i.e - FB"
+          placeholder: "i.e - FB, FRED"
         },
         value: "",
         validation: {
@@ -161,15 +161,15 @@ class App extends Component {
     });
   };
 
-  deleteStockDataHandler = (stockId) => {
+  deleteStockDataHandler = stockId => {
     this.props.deleteStockData(stockId).then(res => {
       this.setState({ searchHistory: this.props.searchHistory });
     });
   };
 
-  showSearchedDataHandler = (stockId) => {
+  showSearchedDataHandler = stockId => {
     this.getStockData(stockId);
-  }
+  };
 
   render() {
     //looping on the quandl form state obj and pushing the id and every input type(first name, last name....)
