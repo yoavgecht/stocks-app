@@ -12,3 +12,7 @@ body {
 ul.list-group li.list-group-item span.glyphicon-trash, ul.list-group li.list-group-item {
   cursor: pointer;
 }
+
+.trash-class, .list-group-class {
+    cursor: pointer
+}

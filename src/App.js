@@ -15,6 +15,7 @@ import {
 import Header from "./components/Header";
 import Footer from "./components/Footer";
 
+
 class App extends Component {
   //form data
   state = {
@@ -168,8 +169,9 @@ class App extends Component {
     });
   };
 
-  showSearchedDataHandler = (searchDate, stockName) => {
-    this.props.showClickedSearchItem(searchDate, stockName).then(res => {
+  showSearchedDataHandler = (stockId) => {
+    console.log(stockId);
+    this.props.showClickedSearchItem(stockId).then(res => {
       this.setState({ tickerData: this.props.data[0][0] });
     });
   }
