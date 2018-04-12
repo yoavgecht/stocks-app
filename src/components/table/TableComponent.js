@@ -8,7 +8,8 @@ const TableComponent = (props) => {
     const getChangePercentage = (price) => {
         var quote1 = parseInt(closingStockPrice);
         var quote2 = parseInt(price); 
-        return ((quote1 / quote2) -1 ) * 100;
+        const change =  (quote2 - quote1 / quote2) * 100;
+        return change.toFixed(2);
     }
 
     return (
