@@ -57,29 +57,42 @@ app.use(express.static(path.join(__dirname, '../build')))
                     }
 
                     collection.insert(stockData, function(err, data){
-                        res.json(data);
+                          collection.find({}).toArray(function(err, data){
+                            if(err) throw err;
+                            console.log('data');
+                            console.log(data);
+                            res.json(data);
+                        });
                     });
             });
 
-        app.delete('/api/delete-ticker-data/:stock', (req, res, next) => {
-            console.log('param', req.params.stock);
+        app.delete(`/api/delete-ticker-data/:id`, (req, res, next) => {
+            console.log('req.params.id', req.params.id);
             db = client.db('stockdata');
             var collection = db.collection('stockdata');
-            collection.find({ dataset_code: req.params.stock }, function(err, data){
-							console.log('DATA FROM FINDING:', data);
-                collection.remove({_id: data._id},{justOne: true}, function(){
-			 					res.json(null);
-			 			});
+            var obj_id = new require('mongodb').ObjectID(req.params.id);
+            collection.remove({_id: obj_id} ,{justOne: true}, () => {
+                 collection.find({}).toArray(function(err, data){
+                if(err) throw err;
+                console.log('data');
+                console.log(data);
+                res.json(data);
             });
+            });
+           
         });
 
-        app.get('/api/get-search-history-data', (req, res, next) => {
+        //GET IS NOT WORKING SO USED POST
+        app.post('/api/get-history-data', (req, res, next) => {
+              console.log('/api/get-search-history-data');
               db = client.db('stockdata');
               var collection = db.collection('stockdata');
-              collection.find({}, function(err, data){
-                console.log('DATA FROM FINDING:', data);
-                    res.json(data);
-                });
+              collection.find({}).toArray(function(err, data){
+                if(err) throw err;
+                console.log('data');
+                console.log(data);
+                res.json(data);
+            });
             });
         });
 

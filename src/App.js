@@ -52,7 +52,7 @@ class App extends Component {
     //validation function - checking for the rules we defined on the quandl form data state object
 
     componentDidMount(){
-        // this.getStockData();
+        this.getStockData();
     }
 
     checkValidation(value, rules) {
@@ -153,8 +153,10 @@ class App extends Component {
         });
     }
 
-    deleteStockDataHandler = (stock) => {
-        this.props.deleteStockData(stock);
+    deleteStockDataHandler = (stockId) => {
+        this.props.deleteStockData(stockId).then(res => {
+             this.setState({searchHistory: this.props.searchHistory}) 
+        });
     }
 
   render() {
@@ -220,13 +222,6 @@ class App extends Component {
             bsSize="large" 
             disabled={!this.state.isFormValid}
             onClick={this.saveStockDataHandler}>Save</Button>
-
-            <Button
-            style={{marginTop: 20}} 
-            bsStyle="success" 
-            bsSize="large" 
-            disabled={!this.state.isFormValid} 
-            onClick={this.deleteStockDataHandler}>Delete</Button>
             </Col>
          }
         </Row> 
