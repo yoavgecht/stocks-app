@@ -9,10 +9,17 @@ body {
 }
 
 
-ul.list-group li.list-group-item span.glyphicon-trash, ul.list-group li.list-group-item {
-  cursor: pointer;
+.list-group-class.list-group-item .glyphicon.glyphicon-trash, .list-group-class.list-group-item {
+  cursor: pointer!important;
 }
 
-.trash-class, .list-group-class {
-    cursor: pointer
+
+
+table th, table td {
+  text-align: center;
+}
+
+.searches-container {
+    height: 240px;
+    overflow-y: auto;
 }

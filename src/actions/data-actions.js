@@ -3,6 +3,7 @@ import axios from 'axios';
 const saveUrl = '/api/save-ticker-data';
 const getUrl = '/api/get-history-data';
 const getSearchedItemClickedUrl = '/api/get-searched-item-data';
+const deleteStockDataUrl = '/api/delete-ticker-data/';
 
 
 export function setStockData(stockData) {
@@ -67,7 +68,7 @@ export function deleteStockData(stock) {
   return dispatch => {
     return dispatch({
       type: 'DELETE_STOCKDATA',
-      payload: axios.delete(`/api/delete-ticker-data/${stock}`).then( (response) =>  {
+      payload: axios.delete(deleteStockDataUrl + {stock}).then( (response) =>  {
           dispatch(setStockData(response))      
       })
     })

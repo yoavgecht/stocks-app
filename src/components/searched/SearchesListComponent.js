@@ -3,7 +3,7 @@ import { ListGroup, ListGroupItem } from "react-bootstrap";
 
 
 const SearchedListComponent = props => (
-  <div>
+  <div className="searches-container">
     <label>Search history:</label>
     <ListGroup>
       {props.searchHistory.map((item, i) => (
