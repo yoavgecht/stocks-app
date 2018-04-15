@@ -1,17 +1,23 @@
 
 
-.react-datepicker__input-container {
+:global(.react-datepicker__input-container) {
+  width: 100% !important;
+}
+
+:global(.react-datepicker-wrapper) {
   width: 100% !important;
 }
 
 
-:global(.list-group-class.list-group-item){ 
-  cursor: pointer!important;
-}
 
-:global(.list-group-class.list-group-item) {
+:global(.details-contailner) {
     cursor: pointer!important;
 }
+
+:global(.trash-class) {
+    cursor: pointer!important;
+}
+
 
 
 table th, table td {

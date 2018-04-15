@@ -68,7 +68,7 @@ export function deleteStockData(stock) {
   return dispatch => {
     return dispatch({
       type: 'DELETE_STOCKDATA',
-      payload: axios.delete(deleteStockDataUrl + {stock}).then( (response) =>  {
+      payload: axios.delete(deleteStockDataUrl + stock).then( (response) =>  {
           dispatch(setStockData(response))      
       })
     })

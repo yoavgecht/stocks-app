@@ -1,9 +1,10 @@
 const request = require('request');
+const keys = require('../keys');
 
 var getRows = (formData, callback) => {
     console.log('formData', formData);
     request({
-        url: `https://www.quandl.com/api/v3/datasets/WIKI/${formData.userInputs.ticker}.json?start_date=${formData.userInputs.startDate}&end_date=${formData.userInputs.endDate}&collapse=daily&key=Vk29NQzysMurK6sfhDxw`,
+        url: `https://www.quandl.com/api/v3/datasets/WIKI/${formData.userInputs.ticker}.json?start_date=${formData.userInputs.startDate}&end_date=${formData.userInputs.endDate}&collapse=daily&key=${keys.quandlApiKey}`,
         json: true 
     }, (error, response, body) => {
         if(error) {
