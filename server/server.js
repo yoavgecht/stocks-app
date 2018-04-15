@@ -1,22 +1,21 @@
 var express = require("express");
 const path = require("path");
-const moment = require("moment");
-moment().format();
+const keys = require('../keys');
+const moment = require("moment"); moment().format();
 const mongodb = require("mongodb");
-const dbUrl = "mongodb://localhost:27017/stockdata";
+const dbUrl = process.env.MONGODB_URI || `mongodb://localhost:27017/${keys.dbName}`;
+const port = process.env.PORT || 8080;
 const QuandlApi = require("./QuandlApi");
 var app = express();
-const port = process.env.PORT || 8080;
 var bodyParser = require("body-parser");
 var db;
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
-app
-  .use(express.static(path.join(__dirname, "../build")))
+app.use(express.static(path.join(__dirname, "../build")))
 
-  .get("*", (req, res, next) => {
-    res.sendFile(path.join(__dirname, "../build/index.html"));
-  });
+.get("*", (req, res, next) => {
+  res.sendFile(path.join(__dirname, "../build/index.html"));
+});
 
 
 mongodb.MongoClient.connect(dbUrl, (err, client) => {

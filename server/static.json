@@ -1,0 +1,16 @@
+{
+  "root": "build/",
+  "routes": {
+    "/**": "index.html"
+  },
+  "headers": {
+    "/**": {
+      "Access-Control-Allow-Origin": "*"
+    },
+  "proxies": {
+      "/api/": {
+        "origin": "${API_URL}"
+      }
+  }
+}
+}
