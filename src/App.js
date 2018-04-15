@@ -56,11 +56,11 @@ class App extends Component {
     searchHistory: null
   };
 
-  //validation function - checking for the rules we defined on the quandl form data state object
-
   componentDidMount() {
     this.getStockData();
   }
+
+   //validation function - checking for the rules we defined on the quandl form data state object
 
   checkValidation(value, rules) {
     let isValid = true;
