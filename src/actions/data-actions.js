@@ -1,16 +1,29 @@
 import axios from 'axios';
 
-const saveUrl = '/api/save-ticker-data';
-const getUrl = '/api/get-history-data';
-const getSearchedItemClickedUrl = '/api/get-searched-item-data';
-const deleteStockDataUrl = '/api/delete-ticker-data/';
+const getSearchedItemDataUrl = '/api/get-searched-item-data';
+const saveTickerDataUrl = '/api/save-ticker-data';
+const getSavedSearchesListUrl = '/api/get-saved-searches-list';
+const deleteListSavedSearchesItemUrl = '/api/delete-list-saved-searches-item/';
 
-
-export function setStockData(stockData) {
+export function getSavedSerchesList() {
   return dispatch => {
     return dispatch({
-      type: 'SET_STOCKDATA',
-      stockData,
+      type: 'GET_SAVED_SEARCHES_LIST',
+      payload: axios.post(getSavedSearchesListUrl)
+        .then( (response) =>  {
+            dispatch(setSavedSearchesList(response))      
+         })
+      })
+  }
+}
+
+
+
+export function setSavedSearchesList(SearchesList) {
+  return dispatch => {
+    return dispatch({
+      type: 'SET_SAVED_SEARCHES_LIST',
+      SearchesList,
       })
   }
 }
@@ -27,10 +40,10 @@ export function setData(stockData) {
 export function showClickedSearchItem(searchDate, stockName) {
   return dispatch => {
     return dispatch({
-      type: 'SHOW_CLICKED_SEARCHED_ITEM',
+      type: 'GET_CLICKED_SEARCHED_ITEM_DATA',
       searchDate,
       stockName,
-      payload: axios.post(getSearchedItemClickedUrl, {date: searchDate, name: stockName})
+      payload: axios.post(getSearchedItemDataUrl, {date: searchDate, name: stockName})
         .then( (response) =>  {
             dispatch(setData(response.data))      
          })
@@ -38,17 +51,7 @@ export function showClickedSearchItem(searchDate, stockName) {
   }
 }
 
-export function fetchStockData(stock) {
-  return dispatch => {
-    return dispatch({
-      type: 'FETCH_STOCKDATA',
-      payload: axios.post(getUrl, stock)
-        .then( (response) =>  {
-            dispatch(setStockData(response))      
-         })
-      })
-  }
-}
+
 
 
 export function saveStockData(stockData) {
@@ -56,20 +59,20 @@ export function saveStockData(stockData) {
     return dispatch({
       type: 'SAVE_STOCKDATA',
       stockData,
-      payload: axios.post(saveUrl, stockData)
+      payload: axios.post(saveTickerDataUrl, stockData)
         .then( (response) =>  {
-            dispatch(setStockData(response))      
+            dispatch(setSavedSearchesList(response))      
          })
       })
   }
 }
 
-export function deleteStockData(stock) {
+export function deleteStock(stock) {
   return dispatch => {
     return dispatch({
       type: 'DELETE_STOCKDATA',
-      payload: axios.delete(deleteStockDataUrl + stock).then( (response) =>  {
-          dispatch(setStockData(response))      
+      payload: axios.delete(deleteListSavedSearchesItemUrl + stock).then( (response) =>  {
+          dispatch(setSavedSearchesList(response))      
       })
     })
   }

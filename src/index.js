@@ -6,7 +6,6 @@ import "./index.css";
 import "./styles.css";
 import App from "./App";
 import registerServiceWorker from "./registerServiceWorker";
-import "react-datepicker/dist/react-datepicker-cssmodules.css";
 
 ReactDOM.render(
   <Provider store={store}>

@@ -28,10 +28,11 @@ export default (state = defaultState, action = {}) => {
       };
     }
 
-    case "SET_STOCKDATA": {
+    case "SET_SAVED_SEARCHES_LIST": {
+      console.log(action.SearchesList);
       return {
         ...state,
-        searchHistory: [...action.stockData.data]
+        searchHistory: [...action.SearchesList.data]
       };
     }
 

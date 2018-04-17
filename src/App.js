@@ -1,19 +1,20 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import axios from "axios";
+import moment from 'moment';
 import { Grid, Row, Col, Button } from "react-bootstrap";
+import Header from "./components/Header";
+import Footer from "./components/Footer";
+import PushComponent from "./components/pushComponent";
 import TableComponent from "./components/table/TableComponent";
 import SearchedListComponent from "./components/searched/SearchesListComponent";
 import Input from "./components/form/Input/Input";
 import {
   saveStockData,
-  deleteStockData,
-  fetchStockData,
+  deleteStock,
+  getSavedSerchesList,
   showClickedSearchItem
 } from "./actions/data-actions";
-
-import Header from "./components/Header";
-import Footer from "./components/Footer";
 
 
 class App extends Component {
@@ -21,43 +22,60 @@ class App extends Component {
   state = {
     quandlForm: {
       ticker: {
-        label: "Enter Ticker (mm/dd/yyyy):",
+        label: "Enter Ticker:",
         elementType: "input",
         elementConfig: {
           type: "text",
-          placeholder: "i.e - FB"
+          placeholder: "Search Stock"
         },
         value: "",
         validation: {
           required: true,
-          minLength: 2,
+          minLength: 1,
           isAlphanumeric: true
         },
         valid: false,
         touched: false
       },
-      date: {
-        label: "Enter Date:",
+      startDate: {
+        label: "Enter starting and ending dates:",
         elementType: "date",
         elementConfig: {
           type: "text",
-          placeholder: "i.e - FB"
+          placeholder: ""
         },
-        value: "",
+        value: moment().format("MM/DD/YYYY"),
         validation: {
           required: true
         },
         valid: false,
         touched: false
-      }
+      },
+     endDate: {
+        label: "",
+        elementType: "endDate",
+        elementConfig: {
+          type: "text",
+          placeholder: ""
+        },
+        value: moment().format("MM/DD/YYYY"),
+        validation: {
+          required: true
+        },
+        valid: false,
+        touched: false
+      },
     },
     isFormValid: false,
     tickerData: null,
-    searchHistory: null
+    searchHistory: [],
+    startDate: null,
+    endDate: null,
+    focusedInput: null
   };
 
   componentDidMount() {
-    this.getStockData();
+    this.getSearchHistoryList();
   }
 
    //validation function - checking for the rules we defined on the quandl form data state object
@@ -109,13 +127,9 @@ class App extends Component {
       ...quandlFormCopy[inputId]
     };
 
-    if (inputId === "date") {
-      newQuandlFormElement.value = event.format("MM-DD-YYYY");
-      this.setState({ startDate: newQuandlFormElement.value });
-    } else {
-      newQuandlFormElement.value = event.target.value;
-    }
-
+   
+    newQuandlFormElement.value = event.target.value;
+    
     newQuandlFormElement.valid = this.checkValidation(
       newQuandlFormElement.value,
       newQuandlFormElement.validation
@@ -124,6 +138,9 @@ class App extends Component {
     quandlFormCopy[inputId] = newQuandlFormElement;
 
     let isFormValid = true;
+    let startDate = this.state.startDate;
+    if(inputId === 'startDate' || inputId === 'endDate') this.onDataChangeHandler('date', startDate);
+    
     for (var key in quandlFormCopy) {
       isFormValid = quandlFormCopy[key].valid && isFormValid;
     }
@@ -132,7 +149,7 @@ class App extends Component {
   };
 
   //function that trigger on form submit
-  formSubmitHandler = event => {
+  formSubmitHandler = (event) => {
     event.preventDefault();
     const userInputs = {};
     for (let inputId in this.state.quandlForm) {
@@ -150,21 +167,26 @@ class App extends Component {
     });
   };
 
-  getStockData = () => {
-    this.props.fetchStockData().then(res => {
+  getSearchHistoryList = () => {
+    this.props.getSavedSerchesList().then(res => {
       this.setState({ searchHistory: this.props.searchHistory });
     });
+   
   };
 
   saveStockDataHandler = () => {
     var data = this.state.tickerData;
     this.props.saveStockData(data).then(res => {
-      this.setState({ searchHistory: this.props.searchHistory });
+      if(data.status === 'data already saved' ) {
+        console.log('data already saved');
+      } else{
+         this.setState({ searchHistory: this.props.searchHistory });
+      }
     });
   };
 
   deleteStockDataHandler = (stockId) => {
-    this.props.deleteStockData(stockId).then(res => {
+    this.props.deleteStock(stockId).then(res => {
       this.setState({ searchHistory: this.props.searchHistory });
     });
   };
@@ -173,6 +195,41 @@ class App extends Component {
     this.props.showClickedSearchItem(searchDate, stockName).then(res => {
       this.setState({ tickerData: this.props.data[0][0] });
     });
+  }
+
+  onDateChangeHandler = ({startDate, endDate}) => {
+    if(!startDate) return false; 
+    let inputId = startDate && !endDate ? 'startDate' : startDate && endDate ? 'endDate' : null;
+
+     const quandlFormCopy = {
+      ...this.state.quandlForm
+    };
+    const newQuandlFormElement = {
+      ...quandlFormCopy[inputId]
+    };
+    
+    inputId === 'startDate' ? newQuandlFormElement.value = moment(startDate, "MM-DD-YYYY") : newQuandlFormElement.value = moment(endDate, "MM-DD-YYYY")
+
+    inputId === 'endDate' ? newQuandlFormElement.valid = this.checkValidation(endDate, inputId) : newQuandlFormElement.valid = this.checkValidation(startDate, inputId)
+
+    newQuandlFormElement.touched = true;
+    quandlFormCopy[inputId] = newQuandlFormElement;
+
+    let isFormValid = true;
+    for (var key in quandlFormCopy) {
+      isFormValid = quandlFormCopy[key].valid && isFormValid;
+    }
+
+    inputId === 'endDate' ? 
+    this.setState(() => ({quandlForm: quandlFormCopy, endDate: endDate, isFormValid})) :
+    this.setState(() => ({quandlForm: quandlFormCopy, startDate: startDate , isFormValid}))
+    
+    
+    
+  }
+
+  onFocusChangeHandler = ({focusedInput}) => {
+    this.setState(() => ({focusedInput: focusedInput}))
   }
 
   render() {
@@ -188,17 +245,23 @@ class App extends Component {
     let form = (
       <form onSubmit={this.formSubmitHandler}>
         {contactForm.map(input => (
+  
           <Input
             key={input.id}
             Label={input.config.label}
-            selectedDate={this.state.startDate}
+            startDate={this.state.startDate}
+            endDate={this.state.endDate}  
+            focusedInput={this.state.focusedInput}  
+            onDatesChange={this.onDateChangeHandler.bind(this)}
+            onFocusChange={this.onFocusChangeHandler.bind(this)}
+            focused={this.state.calenderFocused}
             elementType={input.config.elementType} //the element type of the quandlForm state obj (input)
             elementConfig={input.config.elementConfig}
             value={input.config.value} //the element value of the quandlForm state obj (input)
             invalid={!input.config.valid} // we set it on checkValidation function
             shouldValidate={input.config.validation}
             touched={input.config.touched} //we set it on inputChangedHandler
-            changed={event => this.inputChangedHandler(event, input.id)}
+            changed={(event) => this.inputChangedHandler(event, input.id)}
           />
         ))}
 
@@ -227,20 +290,12 @@ class App extends Component {
           </Col>
           <Col xs={12} sm={12} md={4}></Col>
           <Col xs={12} sm={12} md={4}>
-            {this.props.searchHistory.length > 0 && (
-              <SearchedListComponent
-                showSearchedData={this.showSearchedDataHandler}
-                deleteStock={this.deleteStockDataHandler}
-                searchHistory={this.props.searchHistory}
-              />
-            )}
+             <SearchedListComponent showSearchedData={this.showSearchedDataHandler} deleteStock={this.deleteStockDataHandler} searchHistory={this.state.searchHistory} />
           </Col>
         </Row>
         <Row>
           <Col xs={12} sm={12} md={12}>
-            {this.state.tickerData && (
-              <TableComponent tickerData={this.state.tickerData} />
-            )}
+            <TableComponent tickerData={this.state.tickerData} /> 
           </Col>
         </Row>
         <Row>
@@ -260,6 +315,7 @@ class App extends Component {
         </Row>
         <Row>
           <Col xs={12} sm={12} md={12}>
+            <PushComponent />
             <Footer />
           </Col>
         </Row>
@@ -276,9 +332,4 @@ function mapStateToProps(state) {
   };
 }
 
-export default connect(mapStateToProps, {
-  saveStockData,
-  deleteStockData,
-  fetchStockData,
-  showClickedSearchItem
-})(App);
+export default connect(mapStateToProps, {saveStockData, deleteStock, getSavedSerchesList, showClickedSearchItem})(App);

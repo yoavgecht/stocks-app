@@ -1,22 +1,21 @@
 import React from "react";
 import { Table } from "react-bootstrap";
+import moment from 'moment';
 
-const TableComponent = props => {
-  const closingStockPrice = props.tickerData.data[0][4];
-  console.log(closingStockPrice);
-
-  const getChangePercentage = price => {
+const TableComponent = (props) => {
+  if(props.tickerData && props.tickerData.data.length > 0) {
+    const closingStockPrice = props.tickerData.data[0][4];
+    const getChangePercentage = price => {
     var quote1 = parseInt(closingStockPrice, 10);
     var quote2 = parseInt(price, 10);
     const calc = (((quote2 - quote1)/quote2)*100).toFixed(2)+'%';
-    console.log(calc);
-    return calc
+    return calc;
   };
 
   return (
     <div>
       <h3>{props.tickerData.dataset_code}</h3>
-      <h3>i.e. {props.tickerData.end_date}</h3>
+      <h3>{moment(props.tickerData.start_date).format("DD/MM/YYYY")} - {moment(props.tickerData.end_date).format("DD/MM/YYYY")}</h3>
       <Table responsive striped bordered condensed hover>
         <thead>
           <tr>
@@ -26,9 +25,9 @@ const TableComponent = props => {
           </tr>
         </thead>
         <tbody>
-          {props.tickerData.data.map((item, i) => (
+          {props.tickerData.data.reverse().map((item, i) => (
             <tr key={i}>
-              <td>{item[0]}</td>
+              <td>{moment(item[0]).format("DD/MM/YYYY") }</td>
               <td>{item[4]}</td>
               <td>{getChangePercentage(item[4])}</td>
             </tr>
@@ -37,6 +36,12 @@ const TableComponent = props => {
       </Table>
     </div>
   );
-};
-
+    } else if(props.tickerData && props.tickerData.data.length <= 0) {
+      return (
+      <h4>Couldn't get stock data. Please try again.</h4>
+    );
+  } else {
+    return(<div></div>)
+  }
+}
 export default TableComponent;

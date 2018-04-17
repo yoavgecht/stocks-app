@@ -1,7 +1,8 @@
 import React from "react";
 import classes from "./Input.css";
-import DatePicker from "react-datepicker";
-import moment from 'moment';
+import 'react-dates/initialize';
+import { DateRangePicker, SingleDatePicker, DayPickerRangeController } from 'react-dates';
+
 
 const Input = props => {
   let inputElem = null;
@@ -18,24 +19,30 @@ const Input = props => {
           className={inputClasses.join(" ")}
           {...props.elementConfig}
           value={props.value}
-          onChange={props.changed}
+          onChange={props.changed}  
         />
       );
       break;
 
     case "date":
-      inputElem = (
-        <DatePicker
-          className={inputClasses.join(" ")}
-          {...props.elementConfig}
-          value={props.selectedDate}
-          dateFormat="MM/DD/YYYY"
-          maxDate={moment()}
-          isClearable={true}
-          onChange={props.changed}
-
+      inputElem = (<DateRangePicker
+          startDate={props.startDate}
+          endDate={props.endDate}
+          startDateId={'startDate'}
+          endDateId={'endDate'}
+          // placeholder="Choose a date"
+          onDatesChange={props.onDatesChange}
+          // focused={props.focused}
+          focusedInput={props.focusedInput}
+          onFocusChange={focusedInput => props.onFocusChange({focusedInput})}
+          numberOfMonths={1}
+          isOutsideRange={() => false}
+          displayFormat={'DD/MM/YYYY'}
         />
       );
+      break;
+
+      case "endDate":
       break;
 
     //in case you want to add other input types like textarea etc...
