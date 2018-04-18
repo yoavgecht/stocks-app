@@ -13,6 +13,9 @@ var getRows = (formData, callback) => {
         } else if(response.statusCode === 400) {
              console.log('Unable to fetch data', undefined)
              callback('Unable to fetch data', undefined);
+        } else if(response.statusCode === 503) {
+             console.log('Service Unavailable', undefined)
+             callback('Unable to fetch data', undefined);
         } else if(response.statusCode === 200) {
             console.log(200);
             callback(undefined, body);
