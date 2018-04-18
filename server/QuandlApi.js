@@ -8,9 +8,11 @@ var getRows = (formData, callback) => {
         json: true 
     }, (error, response, body) => {
         if(error) {
-            callback('Unable to connect to servers');
+            console.log('Unable to connect to servers')
+            callback('Unable to connect to servers', undefined);
         } else if(response.statusCode === 400) {
-             callback('Unable to fetch data');
+             console.log('Unable to fetch data', undefined)
+             callback('Unable to fetch data', undefined);
         } else if(response.statusCode === 200) {
             console.log(200);
             callback(undefined, body);

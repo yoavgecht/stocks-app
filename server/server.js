@@ -50,6 +50,10 @@ mongodb.MongoClient.connect(dbUrl, (err, database) => {
     req.body.formData.userInputs.startDate = moment(req.body.formData.userInputs.startDate).format("YYYY/MM/DD");
     req.body.formData.userInputs.endDate = moment(req.body.formData.userInputs.endDate).format("YYYY/MM/DD");
     QuandlApi.getRows(req.body.formData, (errorMessage, response) => {
+      if(errorMessage){
+        console.log(errorMessage)
+        res.json({ status: errorMessage });
+      } 
       response.dataset.data = response.dataset.data.reverse();
       console.log("response", response);
       res.json({ data: response });
