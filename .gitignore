@@ -21,6 +21,6 @@ yarn-debug.log*
 yarn-error.log*
 
 # keys
-./quandl/keys.js
+keys.js
 
 README.md
