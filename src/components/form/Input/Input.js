@@ -1,7 +1,8 @@
 import React from "react";
 import classes from "./Input.css";
 import 'react-dates/initialize';
-import { DateRangePicker, SingleDatePicker, DayPickerRangeController } from 'react-dates';
+import moment from 'moment';
+import { DateRangePicker, isInclusivelyAfterDay } from 'react-dates';
 
 
 const Input = props => {
@@ -36,7 +37,7 @@ const Input = props => {
           focusedInput={props.focusedInput}
           onFocusChange={focusedInput => props.onFocusChange({focusedInput})}
           numberOfMonths={1}
-          isOutsideRange={() => false}
+          isOutsideRange={day => isInclusivelyAfterDay(day, moment().add(1, 'days'))}
           displayFormat={'DD/MM/YYYY'}
         />
       );
