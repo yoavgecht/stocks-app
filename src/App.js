@@ -305,7 +305,7 @@ class App extends Component {
                 style={{ marginTop: 20 }}
                 bsStyle="success"
                 bsSize="large"
-                disabled={!this.state.isFormValid}
+                disabled={!this.state.isFormValid || this.state.tickerData.data.length <= 0}
                 onClick={this.saveStockDataHandler}
               >
                 Save

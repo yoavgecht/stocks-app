@@ -21,11 +21,11 @@ const TableComponent = (props) => {
           <tr>
             <th>Date:</th>
             <th>Price</th>
-            <th>% change compared to entered date</th>
+            <th>% Change compared to starting date</th>
           </tr>
         </thead>
         <tbody>
-          {props.tickerData.data.reverse().map((item, i) => (
+          {props.tickerData.data.map((item, i) => (
             <tr key={i}>
               <td>{moment(item[0]).format("DD/MM/YYYY") }</td>
               <td>{item[4]}</td>

@@ -27,7 +27,7 @@ const SearchedListComponent = (props) => {
       </div> ) 
   } else if(props.searchHistory.length <= 0) {
     return (
-      <h4>You don't have search history yet</h4>
+      <h4>You don't have search history</h4>
     )
   }
 }

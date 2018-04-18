@@ -3,7 +3,7 @@ const path = require("path");
 const keys = require('../keys');
 const moment = require("moment"); moment().format();
 const mongodb = require("mongodb");
-const dbUrl = process.env.MONGODB_URI || `mongodb://localhost:27017/${keys.dbName}`;
+const dbUrl = process.env.MONGODB_URI || `mongodb://localhost:27017/${keys.localDbName}`;
 var db;
 const port = process.env.PORT || 8080;
 const QuandlApi = require("./QuandlApi");
@@ -50,6 +50,7 @@ mongodb.MongoClient.connect(dbUrl, (err, database) => {
     req.body.formData.userInputs.startDate = moment(req.body.formData.userInputs.startDate).format("YYYY/MM/DD");
     req.body.formData.userInputs.endDate = moment(req.body.formData.userInputs.endDate).format("YYYY/MM/DD");
     QuandlApi.getRows(req.body.formData, (errorMessage, response) => {
+      response.dataset.data = response.dataset.data.reverse();
       console.log("response", response);
       res.json({ data: response });
     });
